@@ -1,0 +1,18 @@
+# Виртуальное окружение Python
+myenv/
+venv/
+.env/
+
+# Кэш Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Файлы IDE
+.idea/
+.vscode/
+
+# Логи и временные файлы
+*.log
+*.tmp
