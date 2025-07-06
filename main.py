@@ -15,7 +15,7 @@ from game_over import GameOver
 from game import Game
 
 pygame.init()
-screen = pygame.display.set_mode((1920, 1080))
+screen = pygame.display.set_mode((960, 540))
 
 states = {
     "MENU":Menu(),
