@@ -6,6 +6,7 @@ import pygame
 from base import BaseState
 from player import Player
 
+import levelGenerator
 
 class Gameplay(BaseState):
     def __init__(self):
@@ -14,6 +15,9 @@ class Gameplay(BaseState):
         self.rect.center = self.screen_rect.center
         self.next_state = "GAME_OVER"
         self.player = pygame.sprite.GroupSingle(Player())
+        self.room = levelGenerator.read_room()
+        for i in self.room:
+            print(*i)
 
     def get_event(self, event):
         if event.type == pygame.QUIT:
