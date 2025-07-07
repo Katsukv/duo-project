@@ -12,6 +12,7 @@ __pycache__/
 # Файлы IDE
 .idea/
 .vscode/
+.tmp/
 
 # Логи и временные файлы
 *.log
