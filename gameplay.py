@@ -37,8 +37,27 @@ class Gameplay(BaseState):
                 x = col_index * TILESIZE # размер одного тайла
                 y = row_index * TILESIZE
                 if col == '#':
-                    Tile((x, y), [self.visible_sprites, self.obstacles_sprites])
+                    surface=pygame.image.load('sprites/wall.png')
+                    Tile((x, y), [self.visible_sprites, self.obstacles_sprites], sprite_type='visible', surface=surface)
                 if col == 'p':
                     self.player = Player((x, y), [self.visible_sprites], self.obstacles_sprites) # добавление персонажа
 
 
+
+    # def create_map(self):
+    #     layouts = {
+    #         'boundary': generat(),
+
+    #     }
+    #     for style, layout in layouts.items():
+    #         for row_index, row in enumerate(layout): # WORLD_MAP -- это карта уровня
+    #             for col_index, col in enumerate(row):
+    #                 x = col_index * TILESIZE
+    #                 y = row_index * TILESIZE
+    #                 if style == 'boundary':
+    #                     Tile((x,y), [self.visible_sprites, self.obstacles_sprites], sprite_type='visable', surface='sprites/wall.png')
+    #                 # if col == '#':
+    #                 #     Tile((x, y), [self.visible_sprites, self.obstacles_sprites])
+    #                 # if col == 'p':
+    #                 #     self.player = Player((x, y), [self.visible_sprites], self.obstacles_sprites) # добавление персонажа
+    # когда-нибудь можна доделать графику
