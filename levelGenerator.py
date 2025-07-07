@@ -1,3 +1,7 @@
+# здесь будут функции для генерации уровней
+#
+#
+
 map_file = open("rooms/map.txt", encoding="UTF-8")
 
 

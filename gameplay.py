@@ -5,6 +5,7 @@
 import pygame
 from base import BaseState
 from player import Player
+from cameraGroup import CameraGroup
 
 import levelGenerator
 
@@ -14,7 +15,8 @@ class Gameplay(BaseState):
         self.rect = pygame.Rect((0, 0), (80, 80))
         self.rect.center = self.screen_rect.center
         self.next_state = "GAME_OVER"
-        self.player = pygame.sprite.GroupSingle(Player())
+        self.camera_group = CameraGroup()
+        self.player = pygame.sprite.GroupSingle(Player(self.camera_group))
         self.room = levelGenerator.read_room()
         for i in self.room:
             print(*i)
@@ -25,5 +27,5 @@ class Gameplay(BaseState):
 
     def draw(self, surface):
         surface.fill(pygame.Color("black"))
-        self.player.draw(surface)
-        self.player.update()
+        self.camera_group.update()
+        self.camera_group.custom_drawn()

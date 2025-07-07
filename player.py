@@ -4,8 +4,8 @@ import pygame
 
 class Player(pygame.sprite.Sprite):
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, group):
+        super().__init__(group)
         self.image = pygame.image.load('sprites/32x32.png').convert_alpha()
         self.rect = self.image.get_rect(midbottom=(100, 200))
     
