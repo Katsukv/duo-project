@@ -17,8 +17,6 @@ class Gameplay(BaseState):
         self.rect = pygame.Rect((0, 0), (80, 80))
         self.rect.center = self.screen_rect.center
         self.next_state = "GAME_OVER"
-        #self.camera_group = CameraGroup()
-        #self.player = Player(self.camera_group)
         self.visible_sprites = CameraGroup()
         self.obstacles_sprites = pygame.sprite.Group()
         self.display_surface = pygame.display.get_surface()
@@ -32,8 +30,6 @@ class Gameplay(BaseState):
         surface.fill(pygame.Color("black"))
         self.visible_sprites.custom_drawn(self.player)
         self.visible_sprites.update()
-        #self.camera_group.update()
-        #self.camera_group.custom_drawn(self.player)
 
     def create_map(self):
         for row_index, row in enumerate(WORLD_MAP): # WORLD_MAP -- это карта уровня
