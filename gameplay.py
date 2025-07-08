@@ -30,6 +30,7 @@ class Gameplay(BaseState):
         surface.fill(pygame.Color("black"))
         self.visible_sprites.custom_drawn(self.player)
         self.visible_sprites.update()
+        print(self.player.status)
 
     def create_map(self):
         for row_index, row in enumerate(WORLD_MAP): # WORLD_MAP -- это карта уровня
