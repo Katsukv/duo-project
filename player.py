@@ -7,27 +7,59 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, pos, groups, obstacle_sprites):
         super().__init__(groups)
         self.image = pygame.image.load('sprites/player.png').convert_alpha()
+        self.obstacle_sprites = obstacle_sprites
         self.rect = self.image.get_rect(topleft=pos)
+        
+        
         self.direction = pygame.math.Vector2()
         self.speed = 5
-        self.obstacle_sprites = obstacle_sprites
         self.hitbox = self.rect.inflate(0, -46)
+
+        self.attacking = False
+        self.attack_coldown = 400
+        self.attack_time = 0
+
+
+        self.healing = False
+        self.healing_coldown = 400
+        self.healing_time = 0
+
         
 
     def input(self):
-            keys = pygame.key.get_pressed()
-            if keys[pygame.K_UP]:
-                self.direction.y = -1
-            elif keys[pygame.K_DOWN]:
-                self.direction.y = 1
-            else:
-                 self.direction.y = 0
-            if keys[pygame.K_LEFT]:
-                self.direction.x = -1 
-            elif keys[pygame.K_RIGHT]:
-                 self.direction.x = 1
-            else:
-                 self.direction.x = 0
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_UP]:
+            self.direction.y = -1
+        elif keys[pygame.K_DOWN]:
+            self.direction.y = 1
+        else:
+            self.direction.y = 0
+        if keys[pygame.K_LEFT]:
+            self.direction.x = -1 
+        elif keys[pygame.K_RIGHT]:
+            self.direction.x = 1
+        else:
+            self.direction.x = 0
+        
+        if keys[pygame.K_SPACE] and not self.attacking:
+            print('attack')
+            self.attack_time = pygame.time.get_ticks()
+            self.attacking = True
+        
+        if keys[pygame.K_LCTRL] and not self.healing:
+            print('heal')
+            self.healing_time = pygame.time.get_ticks()
+            self.healing = True
+
+    def coldowns(self):
+        current_time = pygame.time.get_ticks()
+        if current_time - self.attack_time >= self.attack_coldown:
+             self.attacking = False
+        if current_time - self.healing_time >= self.healing_coldown:
+             self.healing = False
+
+
+          
     
     def move(self, speed):
         if self.direction.magnitude() != 0:
@@ -40,22 +72,23 @@ class Player(pygame.sprite.Sprite):
     
     def update(self):
          self.input()
+         self.coldowns()
          self.move(self.speed)
 
     def collision(self, direction):
-         if direction == 'horizontal':
-              for sprite in self.obstacle_sprites:
-                   if sprite.rect.colliderect(self.hitbox):
-                        if self.direction.x > 0:
-                             self.hitbox.right = sprite.rect.left
-                        if self.direction.x < 0:
-                             self.hitbox.left = sprite.rect.right
+        if direction == 'horizontal':
+            for sprite in self.obstacle_sprites:
+                if sprite.rect.colliderect(self.hitbox):
+                    if self.direction.x > 0:
+                            self.hitbox.right = sprite.rect.left
+                    if self.direction.x < 0:
+                            self.hitbox.left = sprite.rect.right
          
-         elif direction == 'vertical':
-                for sprite in self.obstacle_sprites:
-                   if sprite.rect.colliderect(self.hitbox):
-                        if self.direction.y > 0:
-                             self.hitbox.bottom = sprite.rect.top
-                        if self.direction.y < 0:
-                             self.hitbox.top = sprite.rect.bottom
+        elif direction == 'vertical':
+            for sprite in self.obstacle_sprites:
+                if sprite.rect.colliderect(self.hitbox):
+                    if self.direction.y > 0:
+                            self.hitbox.bottom = sprite.rect.top
+                    if self.direction.y < 0:
+                            self.hitbox.top = sprite.rect.bottom
          
