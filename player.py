@@ -1,10 +1,10 @@
 import pygame
 from support import *
-
+from setting import *
 
 class Player(pygame.sprite.Sprite):
 
-    def __init__(self, pos, groups, obstacle_sprites):
+    def __init__(self, pos, groups, obstacle_sprites, create_atack, destroy_attack):
         super().__init__(groups)
         self.image = pygame.image.load('sprites/player.png').convert_alpha()
         self.obstacle_sprites = obstacle_sprites
@@ -18,7 +18,10 @@ class Player(pygame.sprite.Sprite):
         self.attacking = False
         self.attack_coldown = 400
         self.attack_time = 0
-
+        self.create_atack = create_atack
+        self.destroy_attack = destroy_attack
+        self.weapon_index = 0
+        self.weapon = list(weapon_data.keys())[self.weapon_index]   
 
         self.healing = False
         self.healing_coldown = 400
@@ -51,9 +54,9 @@ class Player(pygame.sprite.Sprite):
             self.direction.x = 0
         
         if keys[pygame.K_SPACE] and not self.attacking:
-            print('attack')
-            self.attack_time = pygame.time.get_ticks()
             self.attacking = True
+            self.attack_time = pygame.time.get_ticks()
+            self.create_atack()
         
         if keys[pygame.K_LCTRL] and not self.healing:
             print('heal')
@@ -64,6 +67,7 @@ class Player(pygame.sprite.Sprite):
         current_time = pygame.time.get_ticks()
         if current_time - self.attack_time >= self.attack_coldown:
              self.attacking = False
+             self.destroy_attack()
         if current_time - self.healing_time >= self.healing_coldown:
              self.healing = False
 

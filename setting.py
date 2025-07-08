@@ -3,6 +3,11 @@ HEIGHT = 720
 FPS = 60
 TILESIZE = 64
 
+weapon_data = {
+    'sword': {'coldown': 100, 'damage': 100, 'graphics': './dasd/dsad'},
+}
+
+
 #MAP - 20 X 20
 WORLD_MAP = map_20x20 = [
     ['#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'],

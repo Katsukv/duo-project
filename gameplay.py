@@ -8,6 +8,7 @@ from player import Player
 from cameraGroup import CameraGroup
 from tile import Tile
 from setting import *
+from weapon import Weapon
 
 import levelGenerator
 
@@ -21,6 +22,8 @@ class Gameplay(BaseState):
         self.obstacles_sprites = pygame.sprite.Group()
         self.display_surface = pygame.display.get_surface()
         self.create_map()
+
+        self.current_attack = 0
         
     def get_event(self, event):
         if event.type == pygame.QUIT:
@@ -30,7 +33,6 @@ class Gameplay(BaseState):
         surface.fill(pygame.Color("black"))
         self.visible_sprites.custom_drawn(self.player)
         self.visible_sprites.update()
-        print(self.player.status)
 
     def create_map(self):
         for row_index, row in enumerate(WORLD_MAP): # WORLD_MAP -- это карта уровня
@@ -41,8 +43,15 @@ class Gameplay(BaseState):
                     surface=pygame.image.load('sprites/wall.png')
                     Tile((x, y), [self.visible_sprites, self.obstacles_sprites], sprite_type='visible', surface=surface)
                 if col == 'p':
-                    self.player = Player((x, y), [self.visible_sprites], self.obstacles_sprites) # добавление персонажа
+                    self.player = Player((x, y), [self.visible_sprites], self.obstacles_sprites, self.create_attack, self.destroy_attack) # добавление персонажа
 
+    def create_attack(self):
+        self.current_attack = Weapon(self.player, [self.visible_sprites])
+    
+    def destroy_attack(self):
+        if self.current_attack:
+            self.current_attack.kill()
+        self.current_attack = None
 
 
     # def create_map(self):
@@ -60,5 +69,5 @@ class Gameplay(BaseState):
     #                 # if col == '#':
     #                 #     Tile((x, y), [self.visible_sprites, self.obstacles_sprites])
     #                 # if col == 'p':
-    #                 #     self.player = Player((x, y), [self.visible_sprites], self.obstacles_sprites) # добавление персонажа
+    #                 #     self.player = Player((x, y), [self.visible_sprites], self.obstacles_sprites, self.create_attack) # добавление персонажа
     # когда-нибудь можна доделать графику
