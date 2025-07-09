@@ -22,6 +22,8 @@ class Gameplay(BaseState):
         self.next_state = "GAME_OVER"
         self.visible_sprites = CameraGroup()
         self.obstacles_sprites = pygame.sprite.Group()
+        self.attackable_sprites = pygame.sprite.Group()
+        self.attack_sprites = pygame.sprite.Group()
         self.display_surface = pygame.display.get_surface()
         self.create_map()
 
@@ -37,6 +39,8 @@ class Gameplay(BaseState):
         surface.fill(pygame.Color("black"))
         self.visible_sprites.custom_drawn(self.player)
         self.visible_sprites.update()
+        self.visible_sprites.enemy_update(self.player)
+        self.player_attack_logic()
         self.ui.display(self.player)
 
     def create_map(self):
@@ -50,10 +54,20 @@ class Gameplay(BaseState):
                 if col == 'p':
                     self.player = Player((x, y), [self.visible_sprites], self.obstacles_sprites, self.create_attack, self.destroy_attack) # добавление персонажа
                 if col == 'm':
-                    Enemy('spirit', (x, y), [self.visible_sprites], self.obstacles_sprites)
+                    Enemy('spirit', (x, y), [self.visible_sprites, self.attackable_sprites], self.obstacles_sprites)
 
     def create_attack(self):
-        self.current_attack = Weapon(self.player, [self.visible_sprites])
+        self.current_attack = Weapon(self.player, [self.visible_sprites, self.attack_sprites])
+    
+    def player_attack_logic(self):
+        if self.attack_sprites:
+            for attack_sprite in self.attack_sprites:
+                collision_sprites = pygame.sprite.spritecollide(attack_sprite, self.attackable_sprites, True)
+
+            if collision_sprites:
+                for target_sprite in collision_sprites:
+                    target_sprite.get_damage(self.player, attack_sprite.sprite_type)
+
     
     def destroy_attack(self):
         if self.current_attack:

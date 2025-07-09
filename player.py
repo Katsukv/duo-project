@@ -111,7 +111,9 @@ class Player(Entity):
         else:
             self.status = self.status.replace('_attack', '')
     
-    
+    def get_full_weapon_damage(self):
+        return self.stats['attack'] + weapon_data[self.weapon]['damage']    
+
     def update(self):
         self.input()
         self.coldowns()
