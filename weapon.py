@@ -1,6 +1,6 @@
 import pygame
 
-
+from support import *
 
 class Weapon(pygame.sprite.Sprite):
 
@@ -8,9 +8,9 @@ class Weapon(pygame.sprite.Sprite):
         super().__init__(groups)
         direction = player.status.split('_')[0] 
         
-        #full_path = f'sprites/weapons/{player.weapon}/{direction}.png'
-        self.image = pygame.Surface((40, 40))
-        self.image.fill((0,0,0))
+        full_path = f'sprites/weapons/{player.weapon}/{direction}.png'
+        self.image = pygame.image.load(full_path).convert_alpha()
+        #self.image.fill((0,0,0))
         
         if direction == 'right':
             self.rect = self.image.get_rect(midleft=player.rect.midright + pygame.math.Vector2(0,16))

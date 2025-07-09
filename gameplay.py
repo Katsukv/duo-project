@@ -10,6 +10,7 @@ from tile import Tile
 from setting import *
 from weapon import Weapon
 from ui import UI
+from enemy import Enemy
 
 import levelGenerator
 
@@ -48,6 +49,8 @@ class Gameplay(BaseState):
                     Tile((x, y), [self.visible_sprites, self.obstacles_sprites], sprite_type='visible', surface=surface)
                 if col == 'p':
                     self.player = Player((x, y), [self.visible_sprites], self.obstacles_sprites, self.create_attack, self.destroy_attack) # добавление персонажа
+                if col == 'm':
+                    Enemy('spirit', (x, y), [self.visible_sprites], self.obstacles_sprites)
 
     def create_attack(self):
         self.current_attack = Weapon(self.player, [self.visible_sprites])
@@ -61,6 +64,7 @@ class Gameplay(BaseState):
     # def create_map(self):
     #     layouts = {
     #         'boundary': generat(),
+    #         'entities': 
 
     #     }
     #     for style, layout in layouts.items():
