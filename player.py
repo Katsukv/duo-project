@@ -32,6 +32,12 @@ class Player(pygame.sprite.Sprite):
         self.frame = 0
         self.animation_speed = 0.15
 
+        self.stats = {'health': 100, 'attack': 10, 'speed': 5}
+        self.health = self.stats['health']
+        self.exp = 123
+        self.speed = self.stats['speed']
+
+
         
 
     def input(self):

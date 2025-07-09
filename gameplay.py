@@ -9,6 +9,7 @@ from cameraGroup import CameraGroup
 from tile import Tile
 from setting import *
 from weapon import Weapon
+from ui import UI
 
 import levelGenerator
 
@@ -23,6 +24,8 @@ class Gameplay(BaseState):
         self.display_surface = pygame.display.get_surface()
         self.create_map()
 
+        self.ui = UI()
+
         self.current_attack = 0
         
     def get_event(self, event):
@@ -33,6 +36,7 @@ class Gameplay(BaseState):
         surface.fill(pygame.Color("black"))
         self.visible_sprites.custom_drawn(self.player)
         self.visible_sprites.update()
+        self.ui.display(self.player)
 
     def create_map(self):
         for row_index, row in enumerate(WORLD_MAP): # WORLD_MAP -- это карта уровня
