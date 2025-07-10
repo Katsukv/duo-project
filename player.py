@@ -14,7 +14,7 @@ class Player(Entity):
         
         
         self.speed = 5
-        self.hitbox = self.rect.inflate(0, -46)
+        self.hitbox = self.rect.inflate(-10, -20)
 
         self.attacking = False
         self.attack_coldown = 400
