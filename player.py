@@ -13,11 +13,12 @@ class Player(Entity):
         self.rect = self.image.get_rect(topleft=pos)
         
         
-        self.speed = 5
+        self.stats = {'health': 100, 'attack': 10, 'speed': 3}
+        self.max_stats = {'health': 300, 'attack': 20, 'speed': 10}
+        self.upgrade_cost = {'health': 100, 'attack': 100, 'speed': 300}
         self.hitbox = self.rect.inflate(-10, -20)
-
         self.attacking = False
-        self.attack_coldown = 400
+        self.attack_coldown = 500
         self.attack_time = 0
         self.create_atack = create_atack
         self.destroy_attack = destroy_attack
@@ -33,10 +34,14 @@ class Player(Entity):
         self.frame_index = 0
         self.animation_speed = 0.15
 
-        self.stats = {'health': 100, 'attack': 10, 'speed': 5}
         self.health = self.stats['health']
-        self.exp = 123
+        self.exp = 500
         self.speed = self.stats['speed']
+
+
+        self.vulnerable = True
+        self.hurt_time = None
+        self.invicibility_duration = 500
 
 
         
@@ -72,11 +77,15 @@ class Player(Entity):
 
     def coldowns(self):
         current_time = pygame.time.get_ticks()
-        if current_time - self.attack_time >= self.attack_coldown:
+        if current_time - self.attack_time >= self.attack_coldown + weapon_data[self.weapon]['coldown']:
              self.attacking = False
              self.destroy_attack()
         if current_time - self.healing_time >= self.healing_coldown:
              self.healing = False
+        
+        if not self.vulnerable:
+            if current_time - self.hurt_time >= self.invicibility_duration:
+                self.vulnerable = True
 
     def import_player_assets(self): # функция для импорта анимаций персонажа
         character_path = "./sprites/player/"
@@ -130,6 +139,15 @@ class Player(Entity):
         
         self.image = animation[int(self.frame_index)]
         self.rect = self.image.get_rect(center=self.hitbox.center)
+
+        if not self.vulnerable:
+            alpha = self.wave_value()
+        else:
+            alpha = 255
+        self.image.set_alpha(alpha)
+        
+    
+
         
 
 

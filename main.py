@@ -15,7 +15,7 @@ from setting import *
 
 from game import Game
 
-pygame.init()
+pygame.init() 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
 states = {

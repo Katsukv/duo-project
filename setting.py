@@ -19,11 +19,11 @@ HEALTH_COLOR = 'red'
 UI_BORDER_COLOR_ACTIVE = 'gold'
 
 monster_data = {
-    'spirit': {'health': 300, 'exp': 300, 'damage': 20, 'attack_type': 'slash', 'attack_sound': 'dsad', 'speed': 5, 'resistance': 5, 'attack_radius': 20, 'notice_radius': 200}
+    'spirit': {'health': 300, 'exp': 300, 'damage': 20, 'attack_type': 'slash', 'attack_sound': 'dsad', 'speed': 2, 'resistance': 5, 'attack_radius': 20, 'notice_radius': 200}
 }
 
 weapon_data = {
-    'sword': {'coldown': 100, 'damage': 100, 'graphics': './dasd/dsad'},
+    'sword': {'coldown': 200, 'damage': 100, 'graphics': './dasd/dsad'},
 }
 
 

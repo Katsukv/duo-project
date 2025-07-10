@@ -26,8 +26,6 @@ class GameOver(BaseState):
             elif event.key == pygame.K_SPACE:
                 self.next_state = "GAMEPLAY"
                 self.done = True
-            elif event.key == pygame.K_ESCAPE:
-                self.quit = True
 
     def draw(self, surface):
         surface.fill(pygame.Color("black"))
