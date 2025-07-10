@@ -12,6 +12,7 @@ from weapon import Weapon
 from ui import UI
 from enemy import Enemy
 from background import BackGround
+from upgrade import Upgrade
 
 from levelGenerator import get_matrix_of_level
 
@@ -28,6 +29,8 @@ class Gameplay(BaseState):
         self.attack_sprites = pygame.sprite.Group()
         self.display_surface = pygame.display.get_surface()
 
+        self.paused = False
+
         self.start_pos_x = 0
         self.start_pos_y = 0
 
@@ -35,6 +38,7 @@ class Gameplay(BaseState):
         surface = pygame.image.load('sprites/background.png')
         self.visible_sprites.load_bg(surface)
         self.ui = UI()
+        self.upgrade = Upgrade(self.player)
 
         self.current_attack = 0
         
@@ -44,18 +48,27 @@ class Gameplay(BaseState):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_m:
                 self.next_state = self.next_state_posible[pygame.K_m]
-                self.done = True
+                self.paused = not self.paused
             if event.key == pygame.K_ESCAPE:
                 self.next_state = self.next_state_posible[pygame.K_ESCAPE]
                 self.done = True
 
     def draw(self, surface):
         surface.fill(pygame.Color("black"))
-        self.visible_sprites.custom_drawn(self.player, self.start_pos_x, self.start_pos_y)
-        self.visible_sprites.update()
-        self.visible_sprites.enemy_update(self.player)
-        self.player_attack_logic()
+        self.visible_sprites.custom_drawn(self.player)
         self.ui.display(self.player)
+
+        if self.paused:
+            # display upgrade menu
+            self.upgrade.display()
+
+        else:
+            # run the game
+            self.visible_sprites.update()
+            self.visible_sprites.enemy_update(self.player)
+            self.player_attack_logic()
+            pass
+
 
     def create_map(self):
         size_x = 0

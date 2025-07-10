@@ -27,6 +27,11 @@ weapon_data = {
 }
 
 
+TEXT_COLOR_SELECTED = '#111111'
+BAR_COLOR = '#EEEEEE'
+BAR_COLOR_SELECTED = '#111111'
+UPGRADE_BG_COLOR_SELECTED = '#EEEEEE'
+
 #MAP - 20 X 20
 WORLD_MAP = map_20x20 = [
     ['#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'],

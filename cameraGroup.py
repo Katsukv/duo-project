@@ -21,7 +21,7 @@ class CameraGroup(pygame.sprite.Group):
         self.ground_rect = self.ground_surface.get_rect(topleft=(0, 0))
     
         
-    def custom_drawn(self, player, start_pos_x, start_pos_y):
+    def custom_drawn(self, player):
         self.center_target_camera(player)
         # сначала надо будет рисовть фон
 
